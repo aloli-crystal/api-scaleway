@@ -175,14 +175,12 @@ module ScalewayApi
         # `server.zone`.
         def find_any_zone(server_id : String) : Server?
           ScalewayApi::ZONES.each do |zone|
-            begin
-              return get(server_id, zone: zone)
-            rescue ScalewayApi::NotFound
-              next
-            rescue ex : ScalewayApi::ApiError
-              next if ex.http_status == 501
-              raise ex
-            end
+            return get(server_id, zone: zone)
+          rescue ScalewayApi::NotFound
+            next
+          rescue ex : ScalewayApi::ApiError
+            next if ex.http_status == 501
+            raise ex
           end
           nil
         end
