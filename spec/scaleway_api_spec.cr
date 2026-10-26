@@ -1,8 +1,10 @@
 require "./spec_helper"
+require "yaml"
 
 describe ScalewayApi do
   it "expose une version" do
-    ScalewayApi::VERSION.should eq("0.5.4")
+    yml = YAML.parse(File.read(File.join(__DIR__, "..", "shard.yml")))
+    ScalewayApi::VERSION.should eq(yml["version"].as_s)
   end
 
   it "liste les zones Scaleway les plus courantes" do
